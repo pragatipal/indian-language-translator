@@ -34,14 +34,14 @@
 <body>
     <h2>Translate Sentence into Indian Languages</h2>
     <textarea id="inputText" rows="4" placeholder="Enter your sentence here..."></textarea>
-    <button onclick="translate()">Translate</button>
+    <button id="translateBtn">Translate</button>
 
     <div id="output" class="output"></div>
 
     <script>
         async function translate() {
             const text = document.getElementById("inputText").value;
-            const res = await fetch("http://127.0.0.1:5000/translate", {
+            const res = await fetch("http://localhost:5000/translate", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ sentence: text })
@@ -58,5 +58,9 @@
                 outputDiv.appendChild(p);
             }
         }
+
+        // ✅ Connect the button click to function safely
+        document.getElementById("translateBtn").onclick = translate;
     </script>
+
 </body>
