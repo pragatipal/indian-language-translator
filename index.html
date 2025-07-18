@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Indian Language Translator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+            background-color: #f3f3f3;
+        }
+
+        textarea,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .output {
+            margin-top: 20px;
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .translation {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Translate Sentence into Indian Languages</h2>
+    <textarea id="inputText" rows="4" placeholder="Enter your sentence here..."></textarea>
+    <button onclick="translate()">Translate</button>
+
+    <div id="output" class="output"></div>
+
+    <script>
+        async function translate() {
+            const text = document.getElementById("inputText").value;
+            const res = await fetch("http://127.0.0.1:5000/translate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ sentence: text })
+            });
+
+            const data = await res.json();
+            const outputDiv = document.getElementById("output");
+            outputDiv.innerHTML = "";
+
+            for (const [lang, translated] of Object.entries(data)) {
+                const p = document.createElement("div");
+                p.className = "translation";
+                p.innerHTML = `<strong>${lang}:</strong> ${translated}`;
+                outputDiv.appendChild(p);
+            }
+        }
+    </script>
+</body>
+
+</html>
