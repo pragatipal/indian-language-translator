@@ -1,8 +1,10 @@
 services:
   - type: web
-    name: indian-language-translator-backend
+    name: indian-language-translator-api
     env: python
-    region: oregon
-    buildCommand: "pip install -r backend/requirements.txt"
-    startCommand: "python backend/app.py"
+    buildCommand: ""
+    startCommand: python backend/app.py
+    envVars:
+      - key: PORT
+        value: 5000
     plan: free
